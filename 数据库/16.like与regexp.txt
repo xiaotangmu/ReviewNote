@@ -1,0 +1,38 @@
+模糊查询：
+
+1. like -- % _
+'%a%' -- a两边可以有n个字符
+'a__' -- 一个下滑线代表一个字符
+
+2. regexp 接正则表达式
+正则模式
+
+
+^ -- 开头，匹配字符串开始位置，还是上面的例子，查询所有姓王的人名
+select name from 表名 where name regexp '^王';
+
+$ -- 结尾，匹配字符串结束位置，如查询所有姓名末尾是“明”的人名
+select name from 表名 where name regexp '明$';
+
+.，匹配除\n之外的任意单个字符，类似于_，就不写sql语句了
+
+
+[……]，匹配[]中包含的任何一个字符，abcdef……xyz可以简写为[a-z]，0123456789简写成[0-9]，如查询出w／z／s开头的的人名
+select name from 表名 where name regexp '^[wzs]';
+
+[^……]，匹配不包含在[]的字符，如查询出除了w／z／s开头之外的人名
+select name from 表名 where name regexp '^[^wzs]';
+
+
+a|b|c，匹配a或b或c，如将绩效为A-或A或A+的员工查出来，假设绩效列名performance
+select performance from 表名 where performance regexp 'A-|A|A+';
+
+*，重复0次或多次，熟悉javascript正则的同学都知道 --- 针对字符
+
+     'str*'可以匹配 st / str/strr/strrr……
+
+?，重复0次或1次
+'str?'可以匹配st/str
+
++，重复1次或多次
+'str+'可以匹配str/strr/strrr/strrrr……

@@ -1,0 +1,54 @@
+存储过程：
+基本语句：
+删除存储过程：
+drop procedure if exists select_students_count;
+
+设置存储过程
+delimiter ;; -- 替换分隔符
+	create procedure select_students_count() 
+		begin 
+			select count(id) from students; --在这里可以使用声明参数
+		end ;;
+delimiter ;
+
+带参数存储过程
+delimiter ;;
+create procedure select_students_by_name(
+    in _name varchar(255), -- 参数名，参数类型 
+    out _city varchar(255), -- 输出参数
+    inout _age int(11)
+)
+    begin 
+    	select city from students where name = _name and age = _age into _city;
+    end ;;
+delimiter ;
+
+
+执行存储过程：
+call select_students_count(); -- 可以通过参数传递声明参数
+
+
+预处理（预设sql）
+基本语法：
+# 定义预处理语句
+PREPARE stmt_name FROM preparable_stmt;
+# 执行预处理语句
+EXECUTE stmt_name [USING @var_name [, @var_name] ...];
+# 删除(释放)定义
+{DEALLOCATE | DROP} PREPARE stmt_name;
+
+例子：
+PREPARE stmt1 FROM 'SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse';
+SET @a = 3;
+SET @b = 4;    
+EXECUTE stmt1 USING @a, @b;
+
+
+
+自定义函数：
+基本语法：
+create function 函数名([参数列表]) returns 数据类型
+begin
+ sql语句;
+ return 值;
+end;

@@ -1,0 +1,58 @@
+完整性通过约束和触发器来保证
+
+完整性：
+实体完整性：指表中行的完整性，主要用于保证操作数据非空，唯一且不重复 -- 主键。
+
+参照完整性：表间关系 -- 外键
+
+域完整性/自定义完整性：指数据库表中的列必须满足某种特定数据类型或约束。其中约束包括取值范围、精度等规定。
+
+
+
+1. 两种触发器类型
+after -- 操作后触发
+instead of -- 替代操作语句，原本语句不会执行
+
+基本语句：
+create trigger 触发器名
+on 对象（表）
+after/instead of 触发事件（update、delete、insert...）
+as
+	触发体
+
+修改触发器
+alter trigger 触发器名
+on 对象
+after/instead of 触发事件
+as
+	触发体
+
+删除触发器
+drop trigger 触发器名
+
+注意事项
+1）一个触发器只能对应一张表，一张表可以有多个触发器
+2）一个操作可以有多个after 触发器，而只能有一个instead of 触发器
+
+例子：
+create trigger upTriggerStudent
+on Student
+after update
+as
+	update Person 
+	set num = num + 1
+	where pno = （select pno from inserted);
+
+
+幻表：
+inserted: 更新插入后的记录
+deleted：操作前的记录
+
+事务：
+begin
+
+	if exists()
+	rollback -- 回滚事务
+
+commit/end;
+

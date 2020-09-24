@@ -1,0 +1,41 @@
+1. 权限授予 -- GRANT
+GRANT 权限，权限
+ON 对象
+TO 用户;
+
+例子：查询权限
+GRANT SELECT
+ON Student
+TO User1;
+
+
+让授予用户具有该权限传播权限添加 -- WITH GRANT OPTION
+GRANT SELECT
+ON Student	-- ALL PRIVILEGES -所有权限 -- 列 table(column)
+TO User1		-- PUBLIC -所有用户
+WITH GRANT OPTION
+
+2. 回收权限 -- REVOKE
+REVOKE 权限
+ON 对象
+FROM 用户
+
+例子：
+REVOKE SELECT
+ON Table
+FROM user;
+
+同时收回传播权限
+REVOKE SELECT
+ON Table
+FROM user cascade;
+
+
+3. 利用角色对权限实现管理
+创建角色
+Create Role role1
+
+将权限赋予角色
+grant 权限
+on 对象
+to 角色

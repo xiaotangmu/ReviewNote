@@ -1,0 +1,137 @@
+四种SQL语言：DDL、DML、DQL、DQL
+
+1. 数据定义语言 -- DDL
+	 creat 新建/ drop(删除) / alter (修改)
+判断数据库存在 drop datebase if exists school
+
+创建数据库 create datebase school default charser utf8
+
+切换到已创建的 school 数据库 use school
+
+删除表 drop table tb_student
+
+创建表 create table tb_student(stuid int not null  comment '注释') 多个并列用逗号隔开
+create table users(
+	id int(11) primary key auto_increment comment '主键',
+	salary demical(2) not null default 0,
+	check(salary >= 0)
+)
+
+约束：
+　　not null， 在该属性上不允许空值
+
+　　primary key 是否是是主码，主码必须非空且唯一
+
+　　foreign key
+
+　　check(P),P是谓词条件
+
+修改表 --  alter table 表名 add/drop  column 列名 (类型)
+添加列：
+alter table tb_student add column saddr varchar(100);
+
+删除列：
+ alter table tb_student drop column stel;
+
+change 用来修改字段名字以及类型
+alter table 表名 change 旧列名 新列名 类型(长度) 约束;
+如：
+alter table employee change column gender sex varchar(10); --- 需要写完整包括类型什么的 
+修改属性 -- 类似创建新列
+alter table employee change column sex sex varcahr(30);
+
+modify 用来修改字段类型
+alter table 表名 modify 列名 类型(长度) 约束; --  不能修改列名
+如：
+alter table employee modify column sex varchar(40);
+
+alter column  ... set 用来修改字段数据
+alter table 表名 alter column 字段名 set default 默认值
+
+
+2. 数据操作语言 -- DML
+    SELECT - 从数据库表中获取数据
+	select * from users;
+
+    UPDATE - 更新数据库表中的数据
+	update users set name = 'hello' where id = 1;
+
+    DELETE - 从数据库表中删除数据
+	delete from users where id = 1;
+
+    INSERT INTO - 向数据库表中插入数据
+	insert into users(name, phone) values('helo', '1212'),('23','33');
+
+
+
+3.数据控制语言 -- DCL
+GRANT  授权
+
+它可以把语句权限或者对象权限授予给其他用户和角色。语法：GRANT {ALL | statement[,...n]} TO security_account [ ,...n ]
+
+例如：
+
+    grant select, insert, update, delete, references, alter, index on username.table_name to username;     --username代表该表的所有者
+    grant create table, create view, create sequence to username;
+
+授予对象权限的语法形式为：
+
+    GRANT{ ALL [ PRIVILEGES ] | permission [ ,...n ] }{[ ( column [ ,...n ] ) ]
+         ON { table | view }| 
+         ON { table | view } [ ( column [ ,...n ] ) ]| 
+         ON {stored_procedure | extended_procedure }| 
+         ON { user_defined_function } }
+         TO security_account [ ,...n ] [ WITH GRANT OPTION ] [ AS { group | role} ]
+
+
+DENY 拒绝授权
+
+用于拒绝给当前数据库内的用户或者角色授予权限，并防止用户或角色通过其组或角色成员继承权限。否定语句权限的语法形式为：
+DENY { ALL | statement [ ,...n ] } TO security_account [ ,...n ]
+否定对象权限的语法形式为：
+
+    DENY{ ALL [ PRIVILEGES ] | permission [ ,...n ] } { [ ( column [ ,...n ] )] 
+    ON { table | view } | 
+    ON { table | view } [ ( column [ ,...n ] ) ] |
+    ON { stored_procedure | extended_procedure } | 
+    ON {user_defined_function } } 
+    TO security_account [ ,...n ] [ CASCADE ]
+
+
+REVOKE 撤销授权
+
+REVOKE语句是与GRANT语句相反的语句，它能够将以前在当前数据库内的用户或者角色上授予或拒绝的权限删除，但是该语句并不影响用户或者角色从其他角色中作为成员继承过来的权限。
+收回语句权限的语法形式为：
+REVOKE { ALL | statement [ ,...n ] } FROM security_account [ ,...n ]
+例如：
+
+revoke select, insert, update, delete, references, alter, index on username.table_name to username;
+
+收回对象权限的语法形式为：
+
+    REVOKE[ GRANT OPTION FOR ] { ALL [ PRIVILEGES ] | permission [ ,...n ] } { [( column [ ,...n ] ) ] 
+    ON { table | view } | 
+    ON { table | view } [ (column [ ,...n ] ) ] | 
+    ON { stored_procedure | extended_procedure } |
+    ON { user_defined_function } } {
+    TO | FROM } security_account [ ,...n ][ CASCADE ] [ AS { group | role } ]
+
+4. 数据查询语言 -- DQL
+select
+
+5. TCL -- 事务处理语言
+SAVEPOINT 设置保存点 
+
+“保存点”就像是一个标记，标记事务中的某个点以便将来可以回滚，用来将很长的事务划分为若干个较小的事务，它与回滚一起使用以回滚当前事务部分；
+ROLLBACK 回滚
+
+用于事务出错时回滚数据；
+COMMIT 提交
+
+用于结束事务，对数据库做永久性修改，擦除事务中的所有保存点。COMMIT语句表示所有SQL语句均已执行完毕，事务成功结束，数据库处于一致状态；
+
+事务是一个或多个SQL语句序列，在程序更新数据库时事务至关重要，因为必须维护数据的完整性；
+
+
+
+原文链接：https://blog.csdn.net/rosanu_blog/article/details/8799928

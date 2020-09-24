@@ -1,0 +1,9 @@
+题目：要求必须用带EXISTS量词的嵌套查询实现，
+检索和‘Helen White’住在同一个州的订购者（Shopper）的姓和名。（Shopper表）
+
+select first_name, last_name
+from Shopper as x
+where exists(
+	select * from Shopper as y
+	where x.state = y.state and first_name = 'Helen' and last_name = 'White'
+);

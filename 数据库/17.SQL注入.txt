@@ -1,0 +1,13 @@
+SQL注入是一种注入攻击，可以执行恶意sql语句 -- 能造成sql注入的符号是 '  -- 单引号
+
+我们在编程过程中，经常会把用户输入的数据拼成一个SQL语句，然后直接发送给服务器执行，比如：
+
+string sqlStr = "select * from customers
+where CompanyName like '%" + textBox1.Text;
+
+这样的字符串拼接可能会带来灾难性的结果，比如用户在文本框中输入：
+
+a' or 1= 1
+
+那么sqlStr 的内容就是：
+select * from customer where CompanyName like '%a' or 1=1  

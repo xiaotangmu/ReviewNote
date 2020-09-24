@@ -1,0 +1,28 @@
+mysql
+
+1.截取 -- 从1开始
+substring('xxx', 1, 3);
+
+2.截取前/后n个字符
+left('xxx',n);   /right();
+
+3.获取下标 -- 从1开始
+instr('abc', 'b');--2
+
+/locate()
+
+select INSTR('helloll','ll') -- 3
+select LOCATE('ll','helloll') -- 3
+
+4.格式转换
+select CONVERT(90.0, char);
+转varchar 出错
+
+5. 拼接concat -- 不要直接用 + 
+concat(str1, str2,...);
+
+6.获取字符串长度
+length(str);
+
+7.替换字符 -- replace()
+select REPLACE('hello','h','a'); -- aello
