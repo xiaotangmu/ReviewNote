@@ -1,4 +1,4 @@
-存储过程：
+存储过程：可以返回多个值（函数只能返回一个值）
 基本语句：
 删除存储过程：
 drop procedure if exists select_students_count;
@@ -43,6 +43,9 @@ SET @a = 3;
 SET @b = 4;    
 EXECUTE stmt1 USING @a, @b;
 
+参数还可以这样定义
+  DECLARE str VARCHAR(50) DEFAULT '';
+
 
 
 自定义函数：
@@ -52,3 +55,15 @@ begin
  sql语句;
  return 值;
 end;
+
+例子：
+DELIMITER $$
+DROP FUNCTION IF EXISTS genPerson$$
+CREATE FUNCTION genPerson(name varchar(20)) RETURNS varchar(50)
+BEGIN
+  DECLARE str VARCHAR(50) DEFAULT '';
+  SET @tableName=name;
+  SET str=CONCAT('create table ', @tableName,'(id int, name varchar(20));');
+  return str;
+END $$
+DELIMITER ;
